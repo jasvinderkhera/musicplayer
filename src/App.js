@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Songslist from './components/songslist';
-import Songlist from './components/songlist';
 import Song from './components/song';
+import StyleToggle from './components/styleToggle';
 
 function App() {
  
@@ -10,8 +9,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          {/* <Route path='/' element={<Songslist />} /> */}
-          <Route path='/' element={<Songlist />} />
+          <Route path='/' element={<StyleToggle/>} />
           <Route path='/song/:id' element={<Song />} />
         </Routes>
       </div>

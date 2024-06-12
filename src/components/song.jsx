@@ -3,11 +3,10 @@ import { useParams } from "react-router-dom";
 
 function Song() {
   const { id } = useParams();
-  const [songs, setSongs] = useState(null);
+  const [song, setSong] = useState(null);
 
-  useEffect(function () {
-    const url =
-      "https://deezerdevs-deezer.p.rapidapi.com/track/"+id;
+  useEffect(() => {
+    const url = `https://deezerdevs-deezer.p.rapidapi.com/track/${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -21,24 +20,32 @@ function Song() {
         const response = await fetch(url, options);
         const result = await response.json();
         console.log(result);
-        setSongs(result)
+        setSong(result);
       } catch (error) {
         console.error(error);
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
+
   return (
-    <div>
-  {(songs!=null)?
-    <div className="container pt-4">
-        <img src={songs.album.cover_medium} className="img-fluid mb-3 border rounded-2" />
-        <h4 className="mb-2">{songs.title}</h4>
-        <h6 className="mb-2">Artist: {songs.artist.name}</h6>
-        <h6 className="mb-2">Album: {songs.album.title}</h6>
-        <audio src={songs.preview} controls></audio>
-    </div>
-    :"Loading..."}
+    <div 
+      className="bgcover" 
+      style={song ? { backgroundImage: `url(${song.album.cover_big})` } : {}}
+    >
+      <div className="glass-effect">
+        {song ? (
+          <div className="container pt-4">
+            <img src={song.album.cover_medium} className="img-fluid mb-3 border rounded-2" alt={`${song.title} cover`} />
+            <h4 className="mb-2">{song.title}</h4>
+            <h6 className="mb-2">Artist: {song.artist.name}</h6>
+            <h6 className="mb-4">Album: {song.album.title}</h6>
+            <audio src={song.preview} controls></audio>
+          </div>
+        ) : (
+          "Loading..."
+        )}
+      </div>
     </div>
   );
 }
