@@ -39,6 +39,12 @@ function StyleToggle() {
     fetchData();
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   const toggleStyle = () => {
     setCurrentStyle(currentStyle === "Style_1" ? "Style_2" : "Style_1");
   };
@@ -51,6 +57,7 @@ function StyleToggle() {
           <input
             type="text"
             value={searchQuery}
+            onKeyDown={handleKeyPress}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search for an artist or track"
             className="form-control mb-3"
